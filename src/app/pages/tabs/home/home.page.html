@@ -5,7 +5,7 @@
 
   <div class="content">
 
-    <ion-button class="ion-margin" mode="ios" color="success">
+    <ion-button (click)="addOrUpdateTask()" class="ion-margin" mode="ios" color="success">
       Nueva tarea
       <ion-icon slot="end" name="add-circle-outline"></ion-icon>
     </ion-button>
@@ -21,7 +21,7 @@
           <ion-row>
             <ion-col class="ion-text-center" size-lg="5" size-md="5" size-sm="4" size="12">
             <circle-progress
-            [percent]="85"
+            [percent]="getPercentage(task)"
             [radius]="60"
             [outerStrokeWidth]="6"
             [innerStrokeWidth]="4"
@@ -30,6 +30,7 @@
             [animation]="true"
             [titleColor]="'var(--ion-color-dark)'"
             [animationDuration]="300"
+            [subtitle]="'Progreso'"
           ></circle-progress>
 
             </ion-col>

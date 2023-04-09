@@ -14,7 +14,7 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private firebaseSvc: FirebaseService,
-    private UtilsSvc: UtilsService
+    private utilsSvc: UtilsService
   ) { }
 
   ngOnInit() {
@@ -25,11 +25,11 @@ export class ProfilePage implements OnInit {
   }
 
   getUser() {
-    return this.user = this.UtilsSvc.getElementFromLocalStorage('user')
+    return this.user = this.utilsSvc.getElementFromLocalStorage('user')
   }
 
   signOut() {
-    this.UtilsSvc.presentAlert({
+    this.utilsSvc.presentAlert({
       header: 'Cerrar Sesión',
       message: '¿Quiéres <strong>cerrar sesión?</strong>',
       mode: 'ios',
@@ -41,7 +41,8 @@ export class ProfilePage implements OnInit {
         }, {
           text: 'Si, cerrar',
           handler: () => {
-            this.firebaseSvc.signOut();          }
+            this.firebaseSvc.signOut();
+          }
         }
       ]
     })
