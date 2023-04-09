@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ItemReorderEventDetail } from '@ionic/angular';
+import { error } from 'console';
 import { Item, Task } from 'src/app/models/task.model';
 import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
@@ -38,7 +39,87 @@ export class AddUpdateTasksComponent implements OnInit {
 
   }
 
-  getPercentage(){
+
+  submit() {
+    if (this.form.valid) {
+
+      if (this.task) {
+        this.updateTask()
+      } else {
+        this.createTask();
+      }
+
+    }
+  }
+
+
+  createTask() {
+    let path = `users/${this.user.uid}`;
+
+    this.utilsSvc.presentLoading();
+    delete this.form.value.id;
+
+    this.firebaseSvc.addTotSubcollection(path, 'tasks', this.form.value).then(res => {
+
+      this.utilsSvc.dismissModal({ success: true });
+
+      this.utilsSvc.presentToast({
+        message: 'Tarea creada exitosamente',
+        color: 'success',
+        icon: 'checkmark-circle-outline',
+        duration: 2000
+      })
+
+      this.utilsSvc.dismissLoading()
+    }, error => {
+
+      this.utilsSvc.presentToast({
+        message: error,
+        color: 'warning',
+        icon: 'alert-circle-outline',
+        duration: 5000
+      })
+
+      this.utilsSvc.dismissLoading()
+
+    })
+  }
+
+
+  updateTask() {
+    let path = `users/${this.user.uid}/tasks/${this.task.id}`;
+
+    this.utilsSvc.presentLoading();
+    delete this.form.value.id;
+
+    this.firebaseSvc.updateDocument(path, this.form.value).then(res => {
+
+      this.utilsSvc.dismissModal({ success: true });
+
+      this.utilsSvc.presentToast({
+        message: 'Tarea actualizada exitosamente',
+        color: 'success',
+        icon: 'checkmark-circle-outline',
+        duration: 2000
+      })
+
+      this.utilsSvc.dismissLoading()
+    }, error => {
+
+      this.utilsSvc.presentToast({
+        message: error,
+        color: 'warning',
+        icon: 'alert-circle-outline',
+        duration: 5000
+      })
+
+      this.utilsSvc.dismissLoading()
+
+    })
+  }
+
+
+  getPercentage() {
     return this.utilsSvc.getPercentage(this.form.value as Task)
   }
 
@@ -47,12 +128,12 @@ export class AddUpdateTasksComponent implements OnInit {
     this.form.updateValueAndValidity();
   }
 
-  removeItem(index: number){
+  removeItem(index: number) {
     this.form.value.items.splice(index, 1);
-    this.form.updateValueAndValidity();
+    this.form.controls.items.updateValueAndValidity();
   }
 
-  createItem(){
+  createItem() {
     this.utilsSvc.presentAlert({
       header: 'Nueva Actividad',
       backdropDismiss: false,
@@ -72,9 +153,9 @@ export class AddUpdateTasksComponent implements OnInit {
           text: 'Agregar',
           handler: (res) => {
 
-            let item: Item = {name: res.name, completed: false}
+            let item: Item = { name: res.name, completed: false }
             this.form.value.items.push(item);
-            this.form.updateValueAndValidity();
+            this.form.controls.items.updateValueAndValidity();
 
           }
         }
