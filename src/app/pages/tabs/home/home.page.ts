@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from "src/app/models/task.model";
+import { User } from 'src/app/models/user.model';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { AddUpdateTasksComponent } from 'src/app/shared/components/add-update-tasks/add-update-tasks.component';
@@ -12,63 +13,25 @@ import { AddUpdateTasksComponent } from 'src/app/shared/components/add-update-ta
 export class HomePage implements OnInit {
 
 
-  tasks: Task[] = [
-    {
-      id: '1',
-      title: 'Autenticación con Google',
-      description: 'Cear una función que permita autenticar al usuario con Google',
-      items: [
-        { name: 'Actividad 1', completed: true },
-        { name: 'Actividad 2', completed: false },
-        { name: 'Actividad 3', completed: false },
-      ]
-    },
-    {
-      id: '2',
-      title: 'Autenticación con Google',
-      description: 'Cear una función que permita autenticar al usuario con Google',
-      items: [
-        { name: 'Actividad 1', completed: true },
-        { name: 'Actividad 2', completed: false },
-        { name: 'Actividad 3', completed: false },
-      ]
-    },
-    {
-      id: '3',
-      title: 'Autenticación con Google',
-      description: 'Cear una función que permita autenticar al usuario con Google',
-      items: [
-        { name: 'Actividad 1', completed: true },
-        { name: 'Actividad 2', completed: false },
-        { name: 'Actividad 3', completed: false },
-      ]
-    },
-    {
-      id: '4',
-      title: 'Autenticación con Google',
-      description: 'Cear una función que permita autenticar al usuario con Google',
-      items: [
-        { name: 'Actividad 1', completed: true },
-        { name: 'Actividad 2', completed: false },
-        { name: 'Actividad 3', completed: false },
-      ]
-    }
-  ]
+  tasks: Task[] = []
   constructor(
     private firebaseSvc: FirebaseService,
     private utilsSvc: UtilsService
   ) { }
 
   ngOnInit() {
-    this.addOrUpdateTask()
+  }
+
+  ionViewWillEnter() {
+    this.getTasks()
   }
 
 
-  getPercentage(task: Task){
+  getPercentage(task: Task) {
     return this.utilsSvc.getPercentage(task)
   }
 
-  addOrUpdateTask(task?: Task){
+  addOrUpdateTask(task?: Task) {
     this.utilsSvc.presentModal({
       component: AddUpdateTasksComponent,
       componentProps: { task },
@@ -76,4 +39,16 @@ export class HomePage implements OnInit {
     })
   }
 
+  getTasks() {
+    let user: User = this.utilsSvc.getElementFromLocalStorage('user')
+    let path = `users/${user.uid}`
+
+    let sub = this.firebaseSvc.getSubcollection(path, 'tasks').subscribe({
+      next: (res: Task[]) => {
+        console.log(res);
+        this.tasks = res
+        sub.unsubscribe()
+      }
+    })
+  }
 }

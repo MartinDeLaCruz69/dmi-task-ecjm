@@ -16,26 +16,43 @@ export class FirebaseService {
   ) { }
 
 
-  login(user: User){
+  login(user: User) {
     return this.auth.signInWithEmailAndPassword(user.email, user.password)
   }
 
-  signUp(user: User){
+  signUp(user: User) {
     return this.auth.createUserWithEmailAndPassword(user.email, user.password)
   }
 
-  updateUser(user: any){
+  updateUser(user: any) {
     const auth = getAuth();
     return updateProfile(auth.currentUser, user)
   }
 
-  getAuthState(){
+  getAuthState() {
     return this.auth.authState
   }
 
-  async signOut(){
+  async signOut() {
     await this.auth.signOut();
     this.UtilsSvc.routerLink('/auth');
     localStorage.removeItem('user');
+  }
+
+
+  getSubcollection(path: string, subcollectionName: string) {
+    return this.db.doc(path).collection(subcollectionName).valueChanges({ idField: 'id' })
+  }
+
+  addTotSubcollection(path: string, subcollectionName: string, object: any) {
+    return this.db.doc(path).collection(subcollectionName).add(object)
+  }
+
+  updateDocument(path: string, object: any) {
+    return this.db.doc(path).update(object);
+  }
+
+  deleteDocument(path: string) {
+    return this.db.doc(path).delete()
   }
 }
