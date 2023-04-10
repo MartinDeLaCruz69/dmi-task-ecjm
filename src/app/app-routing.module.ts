@@ -16,6 +16,10 @@ const routes: Routes = [
   {
     path: 'tabs',
     loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'maps',
+    loadChildren: () => import('./pages/tabs/maps/maps.module').then( m => m.MapsPageModule), canActivate: [AuthGuard]
   }
 ];
 

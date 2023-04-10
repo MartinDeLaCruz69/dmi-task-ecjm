@@ -44,7 +44,7 @@ export class AuthPage implements OnInit {
         this.utilsSvc.dismissLoading();
 
         this.utilsSvc.presentToast({
-          message: `Te damos la bienvenida, ${user.name} ESTAS SON NUESTRAS POLITICAS:`,
+          message: `Te damos la bienvenida, ${user.name}.`,
           duration: 5000,
           color: 'primary',
           icon: 'person-outline'

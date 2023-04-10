@@ -19,8 +19,8 @@ export class AddUpdateTasksComponent implements OnInit {
 
   form = new FormGroup({
     id: new FormControl(''),
-    title: new FormControl('', [Validators.required, Validators.minLength(4)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(4)]),
+    title: new FormControl('', [Validators.required, Validators.minLength(5)]),
+    description: new FormControl('', [Validators.required, Validators.minLength(5)]),
     items: new FormControl([], [Validators.required, Validators.minLength(1)]),
   })
 
@@ -141,7 +141,7 @@ export class AddUpdateTasksComponent implements OnInit {
         {
           name: 'name',
           type: 'textarea',
-          placeholder: 'Hacer algo...'
+          placeholder: '¿Qué deseas agregar?'
         }
       ],
       buttons: [

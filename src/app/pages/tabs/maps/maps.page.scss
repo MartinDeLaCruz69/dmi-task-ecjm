@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap%27');
+
+ion-header.title-header {
+    ion-toolbar{
+        font-family: 'Dosis', sans-serif !important;
+
+        ion-title{
+            letter-spacing: 2px;
+            font-size: 1.8rem !important;
+        }
+    }
+    ion-segment{
+        --background: var(--ion-color-primary);
+        ion-segment-button{
+            font-family: 'Dosis', sans-serif !important;
+            font-size: 1rem;
+            --color: var(--ion-color-light);
+            --color-checked: #fff;
+        }
+    }
+}
+
+ion-content{
+    #map {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 150ms ease-in;
+        display: block;
+        &.show-map{
+            opacity: 1;
+        }
+    }
+}
