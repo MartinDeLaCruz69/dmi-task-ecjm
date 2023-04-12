@@ -1,11 +1,10 @@
-<ion-header backButton="/auth">
+<ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center ion-no-margin">Aviso de privacidad para una aplicación de chat instantáneo de acuerdo a la Ley de Protección de Datos Personales en Posesión de Particulares en México.</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
 <i>
   <div class="content">
 
@@ -32,11 +31,22 @@
       <br>
       <br>
       -Contacto:
-      Si tiene alguna pregunta o inquietud sobre esta política de privacidad o sobre la forma en que se maneja la información personal en la aplicación, comuníquese con el desarrollador en:
+      Si tiene alguna pregunta o inquietud sobre esta política de privacidad o sobre la forma en que se maneja la información personal en la aplicación, comuníquese con el desarrollador: martindelacruz@gmail.com, 4491109105.
     </h3>
 
   </div>
 
+  <div>
+    <ion-item lines="none">
+      <ion-checkbox [(ngModel)]="permiso" labelPlacement="start"></ion-checkbox>
+        &nbsp;
+      <ion-label>Aceptar las politicas de seguridad.</ion-label>
+
+      <ion-button href="/auth" [disabled]="!permiso" slot="end" shape="round">
+        Aceptar permisos.
+      </ion-button>
+    </ion-item>
+  </div>
 </i>
 
 </ion-content>

@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PolicyPrivacityPage implements OnInit {
 
+  permiso: boolean = false
+
   constructor() { }
 
   ngOnInit() {
