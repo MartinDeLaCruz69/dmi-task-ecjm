@@ -6,7 +6,7 @@ import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'auth',
+    redirectTo: 'policy-privacity',
     pathMatch: 'full'
   },
   {
@@ -20,6 +20,10 @@ const routes: Routes = [
   {
     path: 'maps',
     loadChildren: () => import('./pages/tabs/maps/maps.module').then( m => m.MapsPageModule), canActivate: [AuthGuard]
+  },
+  {
+    path: 'policy-privacity',
+    loadChildren: () => import('./pages/tabs/policy-privacity/policy-privacity.module').then( m => m.PolicyPrivacityPageModule), canActivate: [NoAuthGuard]
   }
 ];
 
