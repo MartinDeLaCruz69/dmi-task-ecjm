@@ -4,7 +4,7 @@
   <app-header></app-header>
   <app-logo></app-logo>
 
-  <h2 class="ion-text-center ion-no-margin">Login</h2>
+  <h2 class="ion-text-center ion-no-margin">Login </h2>
 
   <div class="content">
 <div class="d-flex-center">
@@ -15,7 +15,7 @@
 
     <app-custom-input autocomplete="email" [control]="form.controls.email" type="email" label="Correo" icon="mail-outline"></app-custom-input>
   <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.dirty">
-    <div *ngIf="form.controls.email.errors?.['required']">Ingrese un email</div>
+    <div *ngIf="form.controls.email.errors?.['required']">Ingrese un email válido</div>
     <div *ngIf="form.controls.email.errors?.['email']">Por favor, ingrese un email válido</div>
   </div>
 
